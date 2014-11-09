@@ -1,9 +1,10 @@
 __author__ = 'Pat'
 import sys
 
+## Method that determines if a number is prime
 def isPrime(max):
     for x in range (2, max):
-        if(max%x == 0):
+        if(max % x == 0):
             return 0
     return 1
 
