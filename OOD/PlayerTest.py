@@ -1,6 +1,7 @@
 __author__ = 'Pat'
 
-import Player
+
+# import Player
 #####################################################################
 #Testing methods
 playerTestList = ['Tony', 'Collin', 'Baliga', 'Dan']
