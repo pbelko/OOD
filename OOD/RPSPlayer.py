@@ -7,7 +7,7 @@ import Message
 
 class RPSPlayer(Player.Player):
     # self variables
-    playerList = []
+    player_list = []
     rock_cut = .3
     paper_cut = .6
     total = 10
@@ -18,14 +18,14 @@ class RPSPlayer(Player.Player):
         found_player = False
         player = [person, 0, 0, 0]
 
-        for i in range(0,len(self.playerList)):
-            if(self.playerList[i][0] == person):
-                player = self.playerList[i]
+        for i in range(0, len(self.player_list)):
+            if (self.player_list[i][0] == person):
+                player = self.player_list[i]
                 found_player = True
                 break
 
         if(not found_player):
-            self.playerList.append(player)
+            self.player_list.append(player)
 
         return player
 
