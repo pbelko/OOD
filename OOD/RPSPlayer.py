@@ -58,15 +58,20 @@ class RPSPlayer(Player.Player):
     # implementing observer method
     # string checks will need to change to what messages actually will be
     def notify(self, msg):
-        split_message = str(msg).split(" ")
-
-        if split_message[1] == "picked":
-            self.match_results(split_message[0].lower(),split_message[2].lower())
-        elif split_message[1] == "playing" :
-            if split_message[0] == self.name:
-                self.me_playing_against(split_message[2].lower())
-            else:
-                self.me_playing_against(split_message[0].lower())
+        if msg.is_match_start_message():
+            p_list = msg.get_players()
+            self.p1 = p_list[0].name
+            self.p2 = p_list[1].name
+        elif msg.is_round_end_message():
+            if not self.p1 == self.name:
+                self.match_results(self.p1, msg.get_info()[0][0])
+            if not self.p2 == self.name:
+                self.match_results(self.p2, msg.get_info()[0][1])
+        elif msg.is_round_start_message():
+            if self.p1 == self.name:
+                self.me_playing_against(self.p2)
+            elif self.p2 == self.name:
+                self.me_playing_against(self.p1)
 
     # returns my move, based on what the other player chooses most often
     def play(self, position=None):
