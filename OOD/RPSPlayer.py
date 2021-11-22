@@ -12,6 +12,8 @@ class RPSPlayer(Player.Player):
     paper_cut = .6
     total = 10
     name = None
+    p1 = None
+    p2 = None
 
     # finds a player and his information
     def find_player(self, person):
@@ -48,11 +50,11 @@ class RPSPlayer(Player.Player):
     def match_results(self, person, played):
         player = self.find_player(person)
 
-        if(played == "rock"):
+        if(played == 0):
             player[1] = player[1] + 1
-        elif(played == "paper"):
+        elif(played == 1):
             player[2] = player[2] + 1
-        elif(played == "scissors"):
+        elif(played == 2):
             player[3] = player[3] + 1
 
     # implementing observer method
@@ -103,13 +105,29 @@ class RpsStrategy(object):
 
 if __name__ == "__main__":
     player = RPSPlayer()
+    player.set_name("Pat")
     opponent = RPSPlayer()
-    players = [opponent,player]
+    opponent.set_name("Tony")
+    other = RPSPlayer()
+    other.set_name("Baliga")
+    players = [opponent,other]
     fake_moves = (1,2)
     fake_result = (0,1)
+
+    ##Tests functionality while other play
+    player.notify(Message.Message.get_match_start_message(players))
+    player.notify(Message.Message.get_round_start_message(players))
+    player.notify(Message.Message.get_round_end_message(players,fake_moves,fake_result))
+    player.notify(Message.Message.get_match_end_message(players, fake_result))
+    print ("Moves during others: "+str(player.player_list))
+
+    ##Tests functionality when we are one of the players
+    players = [opponent, player]
 
     player.notify(Message.Message.get_match_start_message(players))
     player.notify(Message.Message.get_round_start_message(players))
     move = player.play()
     print ("Move played: ", move)
     player.notify(Message.Message.get_round_end_message(players,fake_moves,fake_result))
+    player.notify(Message.Message.get_match_end_message(players, fake_result))
+    print ("Moves during ours: "+str(player.player_list))
